@@ -4,7 +4,7 @@ from scrapers.scrapers_factory import ScraperFactory
 import yaml
 import logging
 
-## Comentário de teste
+## Comentário de testeeeeee
 
 app = Flask(__name__)
 
