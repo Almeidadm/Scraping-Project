@@ -1,23 +1,15 @@
 import sqlite3
 
 
-class DataFrameDB:
-    __instance = None
-    db_file = None
-    def __new__(cls, **kwargs):
-        if cls.__instance is None:
-            cls.__instance = super().__new__(cls)
-            cls.__instance.conn = sqlite3.connect('data.db')
-            cls.__instance.cursor = cls.__instance.conn.cursor()
-            cls.db_file = kwargs['db_file']
-        return cls.__instance
-
-    def __call__(self):
-        return self.__instance
+class DataFrameDB():
 
     def __init__(self, db_file):
         self.db_file = db_file
         self.connection = None
+
+    def fetch_data(self, query, params=()):
+        self.connection.execute(query, params)
+        return self.connection.fetchall()
 
     def connect(self):
         self.connection = sqlite3.connect(self.db_file)
