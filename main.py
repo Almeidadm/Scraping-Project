@@ -1,5 +1,6 @@
 import pandas as pd
-from scrapers.scrapers_factory import ScraperFactory
+from src.database import DataFrameDB
+from src.scrapers_factory import ScraperFactory
 import yaml
 import logging
 
@@ -18,8 +19,9 @@ def scrape(query, method):
         df = pd.concat([df, aux], ignore_index=True)
     print("collected:")
     print(df.groupby("website").count())
-    df.to_csv("collected.csv")
-    return df
+
+    db = DataFrameDB()
+    db.save_dataframe(df)
 
 
 def main():

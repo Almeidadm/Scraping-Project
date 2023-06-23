@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 import pandas as pd
-from scrapers.browsers import SeleniumBrowser
+from src.browsers import SeleniumBrowser
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from playwright.sync_api import sync_playwright
 import requests
 from bs4 import BeautifulSoup
-from scrapers.logger import detailed_logging
+from src.logger import detailed_logging
 import logging
 
 # Base scraper class

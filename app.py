@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import pandas as pd
-from scrapers.scrapers_factory import ScraperFactory
+from src.scrapers_factory import ScraperFactory
 import yaml
 import logging
 
@@ -28,8 +28,8 @@ def scrape(query, method):
     print(df.groupby("website").count())
     df.to_csv("collected.csv")
 
-    return redirect(url_for('result.html', df=df, df_result=df.to_html(index=False)))
-
+    render_template('result.html', df=df, df_result=df.to_html(index=False))
+    return display_dataframe(df, df.to_html(index=False))
 
 @app.route('/result', methods=['GET', 'POST'])
 def display_dataframe(df, df_result):

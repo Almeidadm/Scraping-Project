@@ -1,4 +1,4 @@
-from scrapers.base_scrapers import PlaywrightScraper, RequestsScraper, SeleniumScraper
+from src.base_scrapers import PlaywrightScraper, RequestsScraper, SeleniumScraper
 
 
 class FactoryLoader:
@@ -25,7 +25,7 @@ class FactoryLoader:
         return getattr(factory_module, f"{factory_name}")
 
 
-# Abstract Factory for creating web scrapers
+# Abstract Factory for creating web src
 class ScraperFactory:
     @staticmethod
     def create_scraper(scraper_type, **kwargs):
