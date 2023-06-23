@@ -1,47 +1,28 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import pandas as pd
-from src.scrapers_factory import ScraperFactory
-import yaml
-import logging
+from scraper.src.scrapers_factory import ScraperFactory
+from scraper.main import scrape, db
+import asyncio
 
-## Comentário de testeeeeee
 
 app = Flask(__name__)
 
 
 @app.route('/loading')
-def scrape(query, method):
+def loading():
+    return render_template('loading.html')
 
-    with open("config.yaml", "r") as f:
-        config = yaml.safe_load(f)
 
-    df = pd.DataFrame({"title": [], "price": [], "url": [], "website": []})
-    for website in config:
-        logging.info(f"Collecting website {website} with method {method}")
-        print("Scraping ", website)
-        scraper = ScraperFactory.create_scraper(method, **config[website])
-        aux = scraper.scrape(query)
-        aux['website'] = website
-        df = pd.concat([df, aux], ignore_index=True)
+@app.route('/results')
+def results():
+    data = db.fetch_data("SELECT * FROM data")
 
-    print("collected:")
-    print(df.groupby("website").count())
-    df.to_csv("collected.csv")
+    return render_template('results.html', data=data)
 
-    render_template('result.html', df=df, df_result=df.to_html(index=False))
-    return display_dataframe(df, df.to_html(index=False))
 
-@app.route('/result', methods=['GET', 'POST'])
-def display_dataframe(df, df_result):
-    # Render the DataFrame using a template
-
-    if request.method == 'POST':
-        # Filter the DataFrame based on user input
-        filter_name = request.form.get('title')
-        filtered_df = df[df['title'].str.contains(str(filter_name))]
-        return render_template('result.html', df=df, df_result=filtered_df.to_html(index=False))
-
-    return render_template('result.html', df=df, df_result=df_result)
+async def perform_web_scraping(query, method):
+    df = scrape(query, method)
+    db.save_dataframe(df)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -49,6 +30,8 @@ def process_query():
     if request.method == 'POST':
         query = request.form.get('query')
         method = request.form.get('method')
+
+        asyncio.create_task(perform_web_scraping(query, method))
 
         return render_template("loading.html", query=query, method=method)
 
