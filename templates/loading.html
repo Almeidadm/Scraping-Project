@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loading Page</title>
+    <style>
+        /* Add your custom CSS styles for the loading page here */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .loading-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        /* Add your JavaScript code here */
+        document.addEventListener("DOMContentLoaded", function(event) {
+            // This function will be executed when the page finishes loading
+
+            // Display the loading message or animation
+            document.getElementById("loading-message").style.display = "block";
+
+            // Optional: You can use JavaScript to redirect to another page after a delay
+            setTimeout(function() {
+                window.location.href = "/results";
+            }, 3000); // Redirect after 3 seconds (adjust the delay as needed)
+        });
+    </script>
+</head>
+<body>
+    <div class="loading">
+        <div id="loading-message" class="loading-text" style="display: none;">
+            Loading... Please wait.
+        </div>
+        <!-- You can add your custom loading animation here -->
+    </div>
+</body>
+</html>
