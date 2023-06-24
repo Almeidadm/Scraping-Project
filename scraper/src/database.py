@@ -26,7 +26,7 @@ class DataFrameDB:
             title TEXT,
             price REAL,
             url TEXT UNIQUE,
-            store TEXT
+            website TEXT
         )
         '''
         self.connection.execute(query)
@@ -35,10 +35,10 @@ class DataFrameDB:
         cursor = self.connection.cursor()
         cursor.execute("BEGIN TRANSACTION")
         query = '''
-            INSERT INTO products (title, price, url, store)
+            INSERT INTO products (title, price, url, website)
             VALUES (?, ?, ?, ?)
             '''
-        data = [(row['title'], row['price'], row['url'], row['store']) for _, row in data_frame.iterrows()]
+        data = [(row['title'], row['price'], row['url'], row['website']) for _, row in data_frame.iterrows()]
         cursor.executemany(query, data)
 
         self.connection.commit()
