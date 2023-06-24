@@ -35,7 +35,7 @@ class DataFrameDB:
         cursor = self.connection.cursor()
         cursor.execute("BEGIN TRANSACTION")
         query = '''
-            INSERT INTO products (title, price, url, website)
+            INSERT OR IGNORE INTO products (title, price, url, website)
             VALUES (?, ?, ?, ?)
             '''
         data = [(row['title'], row['price'], row['url'], row['website']) for _, row in data_frame.iterrows()]

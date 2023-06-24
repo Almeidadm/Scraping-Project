@@ -1,15 +1,18 @@
 import pandas as pd
-from scraper.src.database import DataFrameDB
+from utils.database import DataFrameDB
+from utils.DataCleaner import DataPreparer
 from scraper.src.scrapers_factory import ScraperFactory
 import yaml
 import concurrent.futures
 import logging
 
 dfs = []
+db = DataFrameDB("data.db")
+preparer = DataPreparer()
 
 
 def scrape(query, method):
-    with open("scraper/config.yaml", "r") as f:
+    with open("./scraper/config.yaml", "r") as f:
         config = yaml.safe_load(f)
 
     df = pd.DataFrame({"title": [], "price": [], "url": [], "website": []})
@@ -19,22 +22,23 @@ def scrape(query, method):
         scraper = ScraperFactory.create_scraper(method, **config[website])
         aux = scraper.scrape(query)
         aux['website'] = website
+        aux['query'] = query
+        aux = preparer.prepare_data(aux, config[website])
+        print("aux", aux)
         df = pd.concat([df, aux], ignore_index=True)
 
+    print("AAAAAAAAAA")
     return df
 
 
 def process_query(query, method):
     logging.info(f">>Scraping the query {query}")
     df = scrape(query, method)
+    logging.info(f">>>df size{len(df)}")
     dfs.append(df)
 
 
-
 def main():
-    db = DataFrameDB("data.db")
-    db.connect()
-
     with open("config.yaml", "r") as f:
         config = yaml.safe_load(f)
 
@@ -58,4 +62,6 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    db.connect()
+    db.create_table()
     main()

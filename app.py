@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
-from scraper.main import scrape
-from scraper.src.database import DataFrameDB
+from flask import Flask, render_template, request, jsonify
+from main import scrape
+from utils.database import DataFrameDB
 
 
 app = Flask(__name__)

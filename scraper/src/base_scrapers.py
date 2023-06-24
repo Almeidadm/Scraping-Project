@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from playwright.sync_api import sync_playwright
 import requests
 from bs4 import BeautifulSoup
-from scraper.src.logger import detailed_logging
+from utils.logger import detailed_logging
 
 
 # Base scraper class
