@@ -24,10 +24,9 @@ def scrape(query, method):
         aux['website'] = website
         aux['query'] = query
         aux = preparer.prepare_data(aux, config[website])
-        print("aux", aux)
         df = pd.concat([df, aux], ignore_index=True)
+    logging.info(f"Collecting all websites for query {query}")
 
-    print("AAAAAAAAAA")
     return df
 
 
