@@ -1,18 +1,19 @@
 import sqlite3
 
 
-class DataFrameDB():
+class DataFrameDB:
 
-    def __init__(self, db_file):
-        self.db_file = db_file
+    def __init__(self, db_name):
+        self.db_name = db_name
         self.connection = None
 
     def fetch_data(self, query, params=()):
-        self.connection.execute(query, params)
-        return self.connection.fetchall()
+        cursor = self.connection.cursor()
+        cursor.execute(query, params)
+        return cursor.fetchall()
 
     def connect(self):
-        self.connection = sqlite3.connect(self.db_file)
+        self.connection = sqlite3.connect(self.db_name)
 
     def disconnect(self):
         if self.connection:
@@ -21,22 +22,23 @@ class DataFrameDB():
 
     def create_table(self):
         query = '''
-        CREATE TABLE IF NOT EXISTS data (
+        CREATE TABLE IF NOT EXISTS products (
             title TEXT,
-            price FLOAT,
-            url TEXT,
+            price REAL,
+            url TEXT UNIQUE,
             store TEXT
         )
         '''
         self.connection.execute(query)
-        self.connection.commit()
 
     def insert_data(self, data_frame):
-        data_frame.to_sql('data', self.connection, if_exists='replace', index=False)
+        cursor = self.connection.cursor()
+        cursor.execute("BEGIN TRANSACTION")
+        query = '''
+            INSERT INTO products (title, price, url, store)
+            VALUES (?, ?, ?, ?)
+            '''
+        data = [(row['title'], row['price'], row['url'], row['store']) for _, row in data_frame.iterrows()]
+        cursor.executemany(query, data)
 
-    def save_dataframe(self, data_frame):
-        self.connect()
-        self.create_table()
-        self.insert_data(data_frame)
-        self.disconnect()
-
+        self.connection.commit()

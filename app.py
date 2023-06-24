@@ -1,8 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
-import threading
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from scraper.main import scrape
 from scraper.src.database import DataFrameDB
-import asyncio
 
 
 app = Flask(__name__)
@@ -10,48 +8,29 @@ app = Flask(__name__)
 db = DataFrameDB("data.db")
 db.connect()
 
-
-@app.route('/loading/')
-def loading(event):
-    event.wait()
-
-    return redirect(url_for('results'))
+event_dict = {}
 
 
-@app.route('/results')
-def results():
-    data = db.fetch_data("SELECT * FROM data")
+@app.route('/loading/', methods=['GET','POST'])
+def loading():
+    method = request.form['method']
+    query = request.form['query']
 
-    return render_template('results.html', data=data)
-
-
-def perform_web_scraping(query, method):
     df = scrape(query, method)
     db.save_dataframe(df)
 
-
-def perform_web_scraping_with_event(query, method, event):
-    perform_web_scraping(query, method)
-    event.set()
+    return render_template('loading.html', method=method, query=query)
 
 
-def perform_web_scraping_background(query, method):
-    event = threading.Event()
-    thread = threading.Thread(target=perform_web_scraping_with_event, args=(query, method, event))
-    thread.start()
-    return event
+@app.route('/results', methods=['GET','POST'])
+def results():
+    data = db.fetch_data("SELECT * FROM data")
+
+    return jsonify(data)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def process_query():
-    if request.method == 'POST':
-        query = request.form.get('query')
-        method = request.form.get('method')
-
-        event = perform_web_scraping_background(query, method)
-
-        return redirect(url_for("loading", event=event))
-
     return render_template('home.html')
 
 

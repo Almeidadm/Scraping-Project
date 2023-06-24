@@ -1,21 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DataFrame Viewer</title>
+    <title>Results</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.post('/results', function(response) {
+                if (response) {
+                    var table = $('<table>').addClass('results-table');
+                    var thead = $('<thead>');
+                    var tbody = $('<tbody>');
+
+                    var headerRow = $('<tr>');
+                    headerRow.append($('<th>').text('Title'));
+                    headerRow.append($('<th>').text('Description'));
+                    thead.append(headerRow);
+
+                    $.each(response, function(index, result) {
+                        var row = $('<tr>');
+                        row.append($('<td>').text(result.title));
+                        row.append($('<td>').text(result.description));
+                        tbody.append(row);
+                    });
+
+                    table.append(thead);
+                    table.append(tbody);
+
+                    $('#results').append(table);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-    <form method="POST" action="/">
-        <label for="filter_name">Filter by Name:</label>
-        <input type="text" id="filter_name" name="filter_name">
-        <input type="submit" value="Filter">
-    </form>
-
-    {% if df_result %}
-        <h2>Filtered DataFrame:</h2>
-        {{ df_result | safe }}
-    {% else %}
-        <h2>Original DataFrame:</h2>
-        {{ df_result | safe }}
-    {% endif %}
+    <h1>Results Page</h1>
+    <div id="results"></div>
 </body>
 </html>

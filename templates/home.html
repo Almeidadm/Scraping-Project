@@ -1,19 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Query Processing</title>
+    <title>Home</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').submit(function(event) {
+                event.preventDefault();
+                var query = $('#query').val();
+                var method = $('input[name=method]:checked').val();
+
+                $.ajax({
+                    url: '/loading',
+                    method: 'POST',
+                    data: {
+                        method: method,
+                        query: query
+                    },
+                    beforeSend: function() {
+                        window.location.href = '/loading';
+                    },
+                    success: function(response) {
+                        window.location.href = '/results';
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+    <style>
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <form method="POST" action="/">
+    <h1>Home Page</h1>
+    <form>
         <label for="query">Query:</label><br>
-        <input type="text" id="query" name="query"><br><br>
+        <input type="text" id="query" name="query" required><br><br>
+
         <label for="method">Method:</label><br>
-        <select id="method" name="method">
-            <option value="selenium">Selenium</option>
-            <option value="playwright">Playwright</option>
-            <option value="requests">Requests</option>
-        </select><br><br>
+        <input type="radio" id="selenium" name="method" value="selenium" required>
+        <label for="selenium">Selenium</label><br>
+
+        <input type="radio" id="requests" name="method" value="requests" required>
+        <label for="requests">Requests</label><br>
+
+        <input type="radio" id="playwright" name="method" value="playwright" required>
+        <label for="playwright">Playwright</label><br><br>
+
         <input type="submit" value="Submit">
     </form>
+
+    <div id="loading">
+        <h2>Loading...</h2>
+    </div>
 </body>
 </html>

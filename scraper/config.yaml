@@ -1,0 +1,85 @@
+ultrafarma:
+  base_url: "https://www.ultrafarma.com.br"
+  search_url: "https://www.ultrafarma.com.br/busca?&q={query}&page={page}"
+  title_selector: "h3.product-name.font-bold"
+  price_selector: "span.product-price-sell"
+  url_selector: "a.product-item-link"
+
+drogariaspacheco:
+  base_url: "https://www.drogariaspacheco.com.br"
+  search_url: "https://www.drogariaspacheco.com.br/pesquisa?q={query}"
+  title_selector: ".prateleira > ul:nth-child(1) > li > div:nth-child(4) > a:nth-child(1)"
+  price_selector: ".price"
+  url_selector: ".prateleira > ul:nth-child(1) > li > div:nth-child(4) > a:nth-child(1)"
+
+drogaraia:
+  base_url: "https://www.drogaraia.com.br"
+  search_url: "https://www.drogaraia.com.br/search?w={query}&order=price%3Adesc&p={page}"
+  title_selector: ".div.rd-col-8:nth-child(2) > div > h2:nth-child(3) > a:nth-child(1)"
+  price_selector: "div.rd-col-8:nth-child(2) > div > div:nth-child(8) > div:nth-child(1) > span:nth-child(1) > div:nth-child(1)"
+  url_selector: ".div.rd-col-8:nth-child(2) > div > h2:nth-child(3) > a:nth-child(1)"
+
+paguemenos:
+  base_url: "https://www.paguemenos.com.br"
+  search_url: "https://www.paguemenos.com.br/{query}?_q={query}&map=ft&page={page}"
+  title_selector: "div.vtex-search-result-3-x-galleryItem > section:nth-child(1) > a:nth-child(1) > article:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1)"
+  price_selector: "div.vtex-search-result-3-x-galleryItem > section:nth-child(1) > a:nth-child(1) > article:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)"
+  url_selector: "div.vtex-search-result-3-x-galleryItem > section:nth-child(1) > a:nth-child(1)"
+
+drogariasaopaulo:
+  base_url: "https://www.drogariasaopaulo.com.br"
+  search_url: "https://www.drogariasaopaulo.com.br/pesquisa?q={query}"
+  title_selector: ".prateleira > ul:nth-child(1) > li > div:nth-child(4) > a:nth-child(1)"
+  price_selector: ".price"
+  url_selector: ".prateleira > ul:nth-child(1) > li > div:nth-child(4) > a:nth-child(1)"
+
+extrafarma:
+  base_url: "https://www.extrafarma.com.br"
+  search_url: "https://www.extrafarma.com.br/{query}?_q={query}&map=ft&page={page}&order=OrderByTopSaleDESC"
+  title_selector: "div.vtex-search-result-3-x-galleryItem > section:nth-child(1) > a:nth-child(1) > article:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1)"
+  price_selector: "div.vtex-search-result-3-x-galleryItem > section:nth-child(1) > a:nth-child(1) > article:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)"
+  url_selector: "div.vtex-search-result-3-x-galleryItem > section:nth-child(1) > a:nth-child(1)"
+
+precopopular:
+  base_url: "https://www.precopopular.com.br"
+  search_url: "https://www.precopopular.com.br/search/?q={query}&page={page}"
+  title_selector: "h1.impulse-title"
+  price_selector: "a.price"
+  url_selector: "a.price"
+
+drogal:
+  base_url: "https://www.drogal.com.br"
+  search_url: "https://www.drogal.com.br/{query}/?p={page}"
+  title_selector: "h2.title > a"
+  price_selector: "p.sale-price"
+  url_selector: "h2.title > a"
+
+farmaciasnissei:
+  base_url: "https://www.farmaciasnissei.com.br"
+  search_url: "https://www.farmaciasnissei.com.br/pesquisa/{query}?pagina={page}&ordenacao=-preco&is_termo=true"
+  title_selector: "div.item.p-2 > div > div > a"
+  price_selector: "div.preco-produto"
+  url_selector: "div.item.p-2 > div > div > a"
+
+farmadelivery:
+  base_url: "https://www.farmadelivery.com.br"
+  search_url: "https://www.farmadelivery.com.br/{query}?_q={query}&map=ft&order=OrderByTopSaleDESC&page={page}"
+  title_selector: "div.vtex-search-result-3-x-galleryItem:nth-child(1) > section:nth-child(1) > a:nth-child(1) > article:nth-child(1) > div:nth-child(2) > h3:nth-child(1) > span:nth-child(1)"
+  price_selector: "span.vtex-product-price-1-x-currencyContainer"
+  url_selector: "div.vtex-search-result-3-x-galleryItem:nth-child(1) > section:nth-child(1)"
+
+qualidoc:
+  base_url: "https://www.qualidoc.com.br/"
+  search_url: "https://www.qualidoc.com.br/search/?Ntt={query}&Ns=Endeca.stratify%28collection%28%29%2Frecord%5Bsku.availabilityStatus%3D%22INSTOCK%22+or+sku.availabilityStatus%3D%22PREORDERABLE%22%5D%2C*%29%7C0%7C%7Csku.activePrice%7C1&No={page}"
+  title_selector: "div.sc-bYOEQd.ddtogE a"
+  price_selector: "div.sc-jxnoCp.hNMdfm strong"
+  url_selector: "div.sc-bYOEQd.ddtogE a"
+
+drogarianovaesperanca:
+  base_url: "https://www.drogarianovaesperanca.com.br"
+  search_url: "https://www.drogarianovaesperanca.com.br/busca/?Pagina={page}&q={query}&Ob=3"
+  title_selector: "div.dg-boxproduto > div:nth-child(2) > h3:nth-child(1) > a:nth-child(1)"
+  price_selector: "span.dg-boxproduto-preco-por"
+  url_selector: "div.dg-boxproduto > div:nth-child(2) > h3:nth-child(1) > a:nth-child(1)"
+
+
