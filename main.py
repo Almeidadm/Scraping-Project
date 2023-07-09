@@ -1,13 +1,12 @@
 import pandas as pd
-from utils.database import DataFrameDB
+from utils.database import DataBaseConnector
 from utils.DataCleaner import DataPreparer
-from scraper.src.scrapers_factory import ScraperFactory
+from scraper.scrapers_factory import ScraperFactory
 import yaml
 import concurrent.futures
 import logging
 
-dfs = []
-db = DataFrameDB("data.db")
+db = DataBaseConnector("data.db")
 preparer = DataPreparer()
 
 
@@ -32,9 +31,7 @@ def scrape(query, method):
 
 def process_query(query, method):
     logging.info(f">>Scraping the query {query}")
-    df = scrape(query, method)
-    logging.info(f">>>df size{len(df)}")
-    dfs.append(df)
+    return scrape(query, method)
 
 
 def main():
@@ -44,16 +41,23 @@ def main():
     queries = config['query']
     method = config['method']
 
+    dfs = []
+
     # Create a ThreadPoolExecutor with the desired number of workers
     with concurrent.futures.ThreadPoolExecutor() as executor:
         # Submit the tasks to the executor
         #  The executor will schedule the tasks across multiple threads
         futures = [executor.submit(process_query, query, method) for query in queries]
+        # Collect the results from each thread
+        for future in concurrent.futures.as_completed(futures):
+            df = future.result()
+            dfs.append(df)
 
         # Wait for the tasks to complete
         concurrent.futures.wait(futures)
 
     logging.info("All queries scraped successfully.")
+    logging.info(f"All dfs: {dfs}")
 
     df = pd.concat(dfs, ignore_index=True)
     db.insert_data(df)
@@ -64,3 +68,4 @@ if __name__ == "__main__":
     db.connect()
     db.create_table()
     main()
+

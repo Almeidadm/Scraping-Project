@@ -1,12 +1,12 @@
 method: requests
 query:
-  - 'dipirona'
-  - 'pomada'
+#  - 'dipirona'
+#  - 'pomada'
 #  - 'gripe'
 #  - 'paracetamol'
-#  - 'fralda'
-#  - 'protetor'
-#  - 'vitamina'
+  - 'fralda'
+  - 'protetor'
+  - 'vitamina'
 #  - 'soro'
 #  - 'leite'
 #  - 'suplemento'

@@ -82,3 +82,9 @@ drogarianovaesperanca:
   price_selector: "span.dg-boxproduto-preco-por"
   url_selector: "div.dg-boxproduto > div:nth-child(2) > h3:nth-child(1) > a:nth-child(1)"
 
+zonasul:
+  base_url: "https://www.drogarianovaesperanca.com.br"
+  search_url: "https://www.drogarianovaesperanca.com.br/busca/?Pagina={page}&q={query}&Ob=3"
+  title_selector: "div.dg-boxproduto > div:nth-child(2) > h3:nth-child(1) > a:nth-child(1)"
+  price_selector: "span.dg-boxproduto-preco-por"
+  url_selector: "div.dg-boxproduto > div:nth-child(2) > h3:nth-child(1) > a:nth-child(1)"

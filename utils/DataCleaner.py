@@ -25,7 +25,7 @@ class DataPreparer:
             title = row['title']
             price = DataPreparer.clean_prices(row['price'])
             url = row['url']
-            store = row['store']
+            store = row['website']
             query = row['query']
 
             if store not in url:
@@ -35,9 +35,8 @@ class DataPreparer:
                 'title': title,
                 'price': price,
                 'url': url,
-                'store': store,
+                'website': store,
                 'query': query
             })
         df = pd.DataFrame(prepared_data)
-        print(df)
         return df

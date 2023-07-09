@@ -1,4 +1,4 @@
-from scraper.src.base_scrapers import PlaywrightScraper, RequestsScraper, SeleniumScraper
+from scraper.base_scrapers import PlaywrightScraper, RequestsScraper, SeleniumScraper
 
 
 class FactoryLoader:

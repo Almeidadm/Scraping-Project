@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import pandas as pd
-from scraper.src.browsers import SeleniumBrowser
+from scraper.browsers import SeleniumBrowser
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
